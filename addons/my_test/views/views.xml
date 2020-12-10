@@ -1,0 +1,66 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="my_test.list">
+      <field name="name">my_test list</field>
+      <field name="model">my_test.my_test</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="my_test.action_window">
+      <field name="name">my_test window</field>
+      <field name="res_model">my_test.my_test</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="my_test.action_server">
+      <field name="name">my_test server</field>
+      <field name="model_id" ref="model_my_test_my_test"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="my_test" id="my_test.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Menu 1" id="my_test.menu_1" parent="my_test.menu_root"/>
+    <menuitem name="Menu 2" id="my_test.menu_2" parent="my_test.menu_root"/>
+    <menuitem name="Menu 3" id="my_test.menu_3" parent="my_test.menu_root"/>
+    <!-- actions -->
+
+    <menuitem name="List" id="my_test.menu_1_list" parent="my_test.menu_1"
+              action="my_test.action_window"/>
+    <menuitem name="服务器" id="my_test" parent="my_test.menu_2"
+              action="my_test.action_server"/>
+    <menuitem name="服务器1" id="my_test2" parent="my_test.menu_3"
+              action="my_test.action_server"/>
+    <menuitem name="服务器2" id="my_test3" parent="my_test.menu_3"
+              action="my_test.action_server"/>
+    <menuitem name="服务器3" id="my_test4" parent="my_test.menu_3"
+              action="my_test.action_server"/>
+
+  </data>
+</odoo>
